@@ -2,11 +2,16 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es5",
-    "sourceMap": true
+    "sourceMap": true,
+    "types": [
+      "mocha", "chai"
+    ]
   },
   "files": [
-    "typings/index",
-    "urlManager"
+    "src/UrlManager",
+    "src/UrlRule",
+    "src/StringHelper",
+    "tests/UrlRuleTest"
   ],
   "exclude": [
     "node_modules"
