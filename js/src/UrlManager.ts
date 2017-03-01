@@ -6,17 +6,27 @@ interface IRule
     route: string;
 }
 
+interface IUrlManagerConfig {
+    enablePrettyUrl: boolean;
+    rules: IRule[]
+}
+
 /**
  * urlManager allow create URLs based php configuration urlManager component
  */
 export class UrlManager {
     /**
+     * Allow to create human-friendly URLs
+     */
+    private enablePrettyUrl: boolean;
+    /**
      * The rules for creating URLs
      */
     private rules: UrlRule[];
 
-    constructor(rules: IRule[]) {
-        this.rules = this.buildRules(rules);
+    constructor(config: IUrlManagerConfig) {
+        this.enablePrettyUrl = config.enablePrettyUrl;
+        this.rules = this.buildRules(config.rules);
     };
 
     /**

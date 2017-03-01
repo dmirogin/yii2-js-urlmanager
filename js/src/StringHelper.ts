@@ -10,4 +10,15 @@ export class StringHelper {
     public static escapeRegexp(pattern: string) : string {
         return pattern.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     }
+
+    /**
+     * Create encoded query for usage in URL
+     * @param params
+     * @returns {string}
+     */
+    public static buildQueryString(params: Object) {
+        return Object.keys(params)
+            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+            .join('&');
+    }
 }

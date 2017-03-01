@@ -29,7 +29,7 @@ export class UrlRule {
      * @param urlParams The parameters
      * @returns {boolean | string} URL or false if this rule can't  be created
      */
-    createUrl(route, urlParams: IUrlParams) : boolean | string {
+    createUrl(route, urlParams: IUrlParams = {}) : boolean | string {
         if (route !== this.route) {
             return false;
         }
@@ -37,25 +37,28 @@ export class UrlRule {
         let regexpGroups = /<([\w._-]+):?([^>]+)?>/g;
         let matches;
 
-        let validParam = true;
-        let validUrl: string = this.name;
+        let resultRule = this.name;
+        let validRule = true;
 
         do {
             matches = regexpGroups.exec(this.name);
             if (matches) {
-                let group: string = matches[2];
-                let groupName: string = matches[1];
+                let [group, groupKey, groupRegexpString] = matches;
 
-                let groupRegexp = new RegExp(StringHelper.escapeRegexp(group));
-
-                if (!groupRegexp.test(<string>urlParams[groupName])) {
-                    validParam = false;
+                let groupRegexp = new RegExp(groupRegexpString);
+                if (!groupRegexp.test(<string>urlParams[groupKey])) {
+                    validRule = false;
+                    break;
                 }
 
-                validUrl = validUrl.replace(new RegExp(StringHelper.escapeRegexp(matches[0])), <string>urlParams[groupName]);
+                resultRule = resultRule.replace(new RegExp(StringHelper.escapeRegexp(group)), <string>urlParams[groupKey]);
             }
         } while (matches);
 
-        return validUrl;
+        if (!validRule) {
+            return this.route + '?' + StringHelper.buildQueryString(urlParams);
+        }
+
+        return resultRule;
     }
 }
