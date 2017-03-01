@@ -18,7 +18,7 @@ describe('Rules', function() {
             },
             "/foo/10/bar/first"
         ],
-        "without params": [
+        "empty params": [
             {
                 name: "/foobarurl",
                 route : "/foo/bar",
