@@ -1,5 +1,5 @@
 {
-    "name": "dorogin/yii2-jsUrlManager",
+    "name": "dorogin/yii2-js-urlmanager",
     "description": "Yii2 javascript URL manager",
     "type": "yii2-extension",
     "require": {
@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "dmirogin\\jsUrlManager\\": ""
+            "dmirogin\\js\\urlmanager\\": ""
         }
     }
 }
