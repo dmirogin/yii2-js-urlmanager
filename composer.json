@@ -1,0 +1,21 @@
+{
+    "name": "dorogin/yii2-jsUrlManager",
+    "description": "Yii2 javascript URL manager",
+    "type": "yii2-extension",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "2.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Dorogin",
+            "email": "dmirogin@ya.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "dmirogin\\jsUrlManager\\": ""
+        }
+    }
+}
