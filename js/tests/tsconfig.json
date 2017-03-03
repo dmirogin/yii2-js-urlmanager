@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "compileOnSave": true,
+    "allowJs": true,
+    "target": "es5",
+    "types": [
+      "mocha", "chai"
+    ]
+  },
+  "files": [
+    "UrlRuleTest"
+  ]
+}

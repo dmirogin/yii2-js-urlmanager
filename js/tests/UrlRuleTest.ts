@@ -1,4 +1,4 @@
-import {UrlRule, IUrlParams} from '../src/UrlRule';
+import {UrlRule} from '../built/UrlRule';
 import 'mocha';
 import { should } from 'chai';
 import { withData } from 'leche';

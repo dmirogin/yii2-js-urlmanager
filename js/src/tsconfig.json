@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "compileOnSave": true,
+    "target": "es5",
+    "outDir": "../built/"
+  },
+  "files": [
+    "UrlManager",
+    "UrlRule",
+    "StringHelper"
+  ]
+}
