@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "dmirogin\\js\\urlmanager\\": ""
+            "dmirogin\\js\\urlmanager\\": "src/"
         }
     }
 }

@@ -1,11 +1,10 @@
 <?php
 namespace dmirogin\js\urlmanager;
 
+use dmirogin\js\urlmanager\assets\JsUrlManager as JsUrlManagerAsset;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Object;
-use yii\web\View;
-use yii\helpers\Json;
 
 class JsUrlManager extends Object implements BootstrapInterface
 {

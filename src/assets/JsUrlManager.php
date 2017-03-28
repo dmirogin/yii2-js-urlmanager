@@ -1,12 +1,11 @@
 <?php
-namespace dmirogin\js\urlmanager;
+namespace dmirogin\js\urlmanager\assets;
 
 use yii\helpers\Json;
 use yii\web\AssetBundle;
 use yii\web\View;
-use yii\web\YiiAsset;
 
-class JsUrlManagerAsset extends AssetBundle
+class JsUrlManager extends AssetBundle
 {
     public $jsOptions = [
         'position' => View::POS_HEAD
@@ -16,10 +15,6 @@ class JsUrlManagerAsset extends AssetBundle
 
     public $js = [
         'UrlManager.js',
-    ];
-
-    public $depends = [
-        YiiAsset::class,
     ];
 
     public static function register($view, $config)

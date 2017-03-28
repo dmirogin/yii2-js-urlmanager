@@ -1,4 +1,4 @@
-import {UrlRule} from '../built/UrlRule';
+import {UrlRule} from '../../_assets/js/built/UrlRule';
 import 'mocha';
 import { should } from 'chai';
 import { withData } from 'leche';
