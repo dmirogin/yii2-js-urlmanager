@@ -2,10 +2,6 @@
     "name": "dmirogin/yii2-js-urlmanager",
     "description": "Yii2 javascript URL manager",
     "type": "yii2-extension",
-    "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": "2.*"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -13,6 +9,13 @@
             "email": "dmirogin@ya.ru"
         }
     ],
+    "require": {
+        "php": ">=5.5.0",
+        "yiisoft/yii2": "2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "autoload": {
         "psr-4": {
             "dmirogin\\js\\urlmanager\\": "src/"
