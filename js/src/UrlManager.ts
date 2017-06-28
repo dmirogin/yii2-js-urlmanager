@@ -1,5 +1,6 @@
 import UrlRule from './UrlRule';
 import {IUrlParams, IUrlManagerConfig, IRule} from './interfaces';
+import * as helper from './helpers';
 
 /**
  * urlManager allow create URLs based php configuration urlManager component
@@ -48,6 +49,10 @@ export default class UrlManager {
             if (compiledRule !== false) {
                 return <string>compiledRule;
             }
+        }
+
+        if (!helper.isEmptyObject(urlParams)) {
+            result += '?' + helper.buildQueryString(urlParams);
         }
 
         return result;

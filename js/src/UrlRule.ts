@@ -53,7 +53,7 @@ export default class UrlRule {
             }
         } while (matches);
 
-        if (!replacedGroups && Object.keys(urlParams).length) {
+        if (!replacedGroups && !helper.isEmptyObject(urlParams)) {
             resultRule += '?' + helper.buildQueryString(urlParams);
         }
 

@@ -32,3 +32,14 @@ test('it should create correct url with query string if passed parameters aren\'
         'param2' : 'value2'
     }));
 });
+
+test('it should create url if route doesn\'t found', t => {
+    t.is('/undefined-url/foo/bar', urlManager.createUrl('/undefined-url/foo/bar'));
+});
+
+test('it should create url with query string if route doesn\'t found and parameters passed', t => {
+    t.is('/undefined-url/foo/bar?param1=value1&param2=value2', urlManager.createUrl('/undefined-url/foo/bar', {
+        'param1' : 'value1',
+        'param2' : 'value2'
+    }));
+});
