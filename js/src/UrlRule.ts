@@ -1,3 +1,6 @@
+import {IUrlParams} from './interfaces';
+import * as helper from './helpers';
+
 /**
  * UrlRule is a rule for generating URLs
  */
@@ -33,6 +36,7 @@ export default class UrlRule {
         let resultRule = this.name;
         let validRule = true;
 
+        let replacedGroups = 0;
         do {
             matches = regexpGroups.exec(this.name);
             if (matches) {
@@ -44,12 +48,17 @@ export default class UrlRule {
                     break;
                 }
 
-                resultRule = resultRule.replace(new RegExp(group.escapeRegexp()), <string>urlParams[groupKey]);
+                resultRule = resultRule.replace(new RegExp(helper.escapeRegexp(group)), <string>urlParams[groupKey]);
+                replacedGroups++;
             }
         } while (matches);
 
+        if (!replacedGroups && Object.keys(urlParams).length) {
+            resultRule += '?' + helper.buildQueryString(urlParams);
+        }
+
         if (!validRule) {
-            return this.route + '?' + urlParams.buildQueryString();
+            return this.route + '?' + helper.buildQueryString(urlParams);
         }
 
         return resultRule;

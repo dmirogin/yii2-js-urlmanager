@@ -1,7 +1,6 @@
 import UrlManager from './UrlManager';
 
-const urlManager = new UrlManager({
+(<any>window).urlManager = new UrlManager({
     enablePrettyUrl: true,
     rules: []
 });
-console.log(urlManager);

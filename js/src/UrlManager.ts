@@ -1,38 +1,5 @@
 import UrlRule from './UrlRule';
-
-declare global {
-    interface String {
-        escapeRegexp(): string;
-    }
-    interface Object {
-        buildQueryString() : string;
-    }
-    interface IUrlParams
-    {
-        [index: string]: number | string;
-    }
-}
-
-String.prototype.escapeRegexp = function() : string {
-    return this.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-};
-
-Object.prototype.buildQueryString = function() : string {
-    return Object.keys(this)
-        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this[key]))
-        .join('&');
-};
-
-interface IRule
-{
-    name: string;
-    route: string;
-}
-
-interface IUrlManagerConfig {
-    enablePrettyUrl?: boolean;
-    rules: IRule[]
-}
+import {IUrlParams, IUrlManagerConfig, IRule} from './interfaces';
 
 /**
  * urlManager allow create URLs based php configuration urlManager component
@@ -73,7 +40,7 @@ export default class UrlManager {
      * @param urlParams The query parameters
      * @returns {string}
      */
-    public createUrl(route: string, urlParams: IUrlParams) : string {
+    public createUrl(route: string, urlParams: IUrlParams = {}) : string {
         let result: string = route;
 
         for (let rule of this.rules) {
