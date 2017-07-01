@@ -16,7 +16,7 @@ export default class UrlManager {
     private rules: UrlRule[];
 
     constructor(config: IUrlManagerConfig) {
-        this.enablePrettyUrl = config.enablePrettyUrl;
+        this.enablePrettyUrl = config.enablePrettyUrl; // @TODO
         this.rules = this.buildRules(config.rules);
     };
 

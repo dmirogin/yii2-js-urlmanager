@@ -9,5 +9,6 @@ export interface IRule
 }
 export interface IUrlManagerConfig {
     enablePrettyUrl?: boolean;
-    rules: IRule[]
+    rules: IRule[],
+    suffix?: string
 }
