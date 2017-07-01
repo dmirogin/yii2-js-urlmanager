@@ -15,10 +15,10 @@ export default class UrlManager {
      */
     private rules: UrlRule[];
 
-    constructor(config: IUrlManagerConfig) {
+    public configure(config: IUrlManagerConfig) {
         this.enablePrettyUrl = config.enablePrettyUrl; // @TODO
         this.rules = this.buildRules(config.rules);
-    };
+    }
 
     /**
      * Create urlRule objects

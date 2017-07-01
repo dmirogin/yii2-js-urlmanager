@@ -1,6 +1,4 @@
 import UrlManager from './UrlManager';
 
-(<any>window).UrlManager = new UrlManager({
-    enablePrettyUrl: true,
-    rules: []
-});
+let urlManager = new UrlManager();
+urlManager.configure((<any>window).urlManagerConfig);

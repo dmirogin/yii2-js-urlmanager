@@ -1,7 +1,8 @@
 import test from 'ava';
 import UrlManager from '../src/UrlManager';
 
-let urlManager = new UrlManager({
+let urlManager = new UrlManager();
+urlManager.configure({
     enablePrettyUrl: true,
     rules: [
         {
