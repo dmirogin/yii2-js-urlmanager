@@ -26,7 +26,7 @@ class JsUrlManager extends Object implements BootstrapInterface
             'rules' => $rules
         ];
 
-        Yii::$app->view->registerJs('window.urlManagerConfig = ' . new JsExpression(Json::encode($config)), View::POS_HEAD);
+        Yii::$app->view->registerJs('window.urlManagerConfig = UrlManager.configure(' . new JsExpression(Json::encode($config)) . ');', View::POS_HEAD);
 
         JsUrlManagerAsset::register(Yii::$app->view);
     }
