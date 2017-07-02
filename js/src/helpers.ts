@@ -28,13 +28,22 @@ export function isEmptyObject (object : Object) : boolean {
 }
 
 /**
+ * Trim slashes
+ * @param string
+ * @returns {string}
+ */
+export function trimSlashes(string : string) : string {
+    return string.replace(/^\/|\/$/g, '');
+}
+
+/**
  * Avoid of unneeded slashes
  * @param string
  * @returns {string}
  */
 export function stripSlashes(string : string) : string {
     // Trimming slashes
-    string = string.replace(/^\/|\/$/g, '');
+    string = trimSlashes(string);
     // Delete repetitive slashes
     string = string.replace(/\/\//g, '/');
 

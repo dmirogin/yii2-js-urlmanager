@@ -55,22 +55,6 @@ test('it should create url if route doesn\'t found', t => {
     }));
 });
 
-test('it should create url if enablePrettyUrl is false', t => {
-    urlManager.configure({
-        enablePrettyUrl: false,
-        rules: [
-            {
-                name: '/foo/<id:(\\d+)>/bar/<type:(first|second)>',
-                route: '/foo/bar'
-            }
-        ]
-    });
-    t.is('/index.php?r=foo%2Fbar&id=10&type=first', urlManager.createUrl('/foo/bar', {
-        'id' : 10,
-        'type' : 'first'
-    }));
-});
-
 test('it should create url if showScriptName is true', t => {
     urlManager.configure({
         enablePrettyUrl: true,
@@ -85,5 +69,54 @@ test('it should create url if showScriptName is true', t => {
     t.is('/index.php/foo/10/bar/first', urlManager.createUrl('/foo/bar', {
         'id' : 10,
         'type' : 'first'
+    }));
+});
+
+test('it should create url if enablePrettyUrl is false', t => {
+    urlManager.configure({
+        enablePrettyUrl: false,
+        suffix: '.html',
+        rules: [
+            {
+                name: '/foo/<id:(\\d+)>/bar/<type:(first|second)>',
+                route: '/foo/bar'
+            }
+        ]
+    });
+    t.is('/index.php?r=foo%2Fbar&id=10&type=first', urlManager.createUrl('/foo/bar', {
+        'id' : 10,
+        'type' : 'first'
+    }));
+});
+test('it should create url if suffix passed', t => {
+    urlManager.configure({
+        enablePrettyUrl: true,
+        showScriptName: false,
+        suffix : '.html',
+        rules: [
+            {
+                name: '/',
+                route: '/site/index'
+            },
+            {
+                name: '/create',
+                route: '/site/create'
+            },
+            {
+                name: '/foo/<id:(\\d+)>/bar/<type:(first|second)>',
+                route: '/foo/bar',
+                suffix: '/'
+            }
+        ]
+    });
+    t.is('/', urlManager.createUrl('/site/index'));
+    t.is('/create.html', urlManager.createUrl('/site/create'));
+    t.is('/foo/10/bar/first/', urlManager.createUrl('/foo/bar', {
+        id: 10,
+        type: 'first'
+    }));
+    t.is('/foo/bar/?id=10&type=third', urlManager.createUrl('/foo/bar', {
+        id: 10,
+        type: 'third'
     }));
 });

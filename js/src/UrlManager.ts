@@ -20,6 +20,11 @@ export default class UrlManager {
      * The rules for creating URLs
      */
     private rules: UrlRule[];
+    /**
+     * Suffix for url
+     * @type {string}
+     */
+    private suffix: string = '';
 
     public configure(config: IUrlManagerConfig) {
         if (config.enablePrettyUrl !== undefined) {
@@ -27,6 +32,9 @@ export default class UrlManager {
         }
         if (config.showScriptName !== undefined) {
             this.showScriptName = config.showScriptName;
+        }
+        if (config.suffix !== undefined) {
+            this.suffix = config.suffix;
         }
         this.buildRules(config.rules);
     }
@@ -39,7 +47,10 @@ export default class UrlManager {
         let result: UrlRule[] = [];
 
         for (let rule of rules) {
-            result.push(new UrlRule(rule.name, helper.stripSlashes(rule.route)));
+            if (rule.suffix === undefined) {
+                rule.suffix = this.suffix;
+            }
+            result.push(new UrlRule(rule));
         }
 
         this.rules = result;
@@ -52,14 +63,17 @@ export default class UrlManager {
      * @returns {string}
      */
     public createUrl(route: string, urlParams: IUrlParams = {}) : string {
-        let result: string = route;
+        let result: string;
 
         if (this.enablePrettyUrl) {
             let prettyResultUrl = this.createPrettyUrl(route, urlParams);
             if (prettyResultUrl) {
                 result = prettyResultUrl;
-            } else if (!prettyResultUrl && !helper.isEmptyObject(urlParams)) {
-                result += '?' + helper.buildQueryString(urlParams);
+            } else if (!prettyResultUrl) {
+                result =  '/' + helper.stripSlashes(route) + this.suffix;
+                if (!helper.isEmptyObject(urlParams)) {
+                    result += '?' + helper.buildQueryString(urlParams);
+                }
             }
         } else {
             result = UrlManager.createQueryUrl(route, urlParams);

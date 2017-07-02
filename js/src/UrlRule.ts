@@ -1,4 +1,4 @@
-import {IUrlParams} from './interfaces';
+import {IUrlParams, IRule} from './interfaces';
 import * as helper from './helpers';
 
 /**
@@ -13,10 +13,14 @@ export default class UrlRule {
      * The route to the controller action
      */
     private route: string;
+    private suffix: string = '';
 
-    constructor(name: string, route: string) {
-        this.name = name;
-        this.route = route;
+    constructor(params: IRule) {
+        this.name = params.name;
+        this.route = helper.stripSlashes(params.route);
+        if (params.suffix !== undefined) {
+            this.suffix = params.suffix;
+        }
     };
 
     /**
@@ -30,10 +34,11 @@ export default class UrlRule {
             return false;
         }
 
+        let trimmedSlashesName = helper.trimSlashes(this.name);
         let regexpGroups = /<([\w._-]+):?([^>]+)?>/g;
         let matches;
 
-        let resultRule = this.name;
+        let resultRule = '/' + trimmedSlashesName;
         let validRule = true;
 
         let replacedGroups = 0;
@@ -53,12 +58,16 @@ export default class UrlRule {
             }
         } while (matches);
 
+        if (trimmedSlashesName) {
+            resultRule += this.suffix;
+        }
+
         if (!replacedGroups && !helper.isEmptyObject(urlParams)) {
             resultRule += '?' + helper.buildQueryString(urlParams);
         }
 
         if (!validRule) {
-            return '/' + this.route + '?' + helper.buildQueryString(urlParams);
+            return '/' + this.route + this.suffix + '?' + helper.buildQueryString(urlParams);
         }
 
         return resultRule;

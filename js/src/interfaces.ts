@@ -6,6 +6,7 @@ export interface IRule
 {
     name: string;
     route: string;
+    suffix?: string;
 }
 export interface IUrlManagerConfig {
     enablePrettyUrl?: boolean;

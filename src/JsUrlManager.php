@@ -47,7 +47,8 @@ class JsUrlManager extends Object implements BootstrapInterface
             if ($rule instanceof UrlRule) {
                 $rules[] = [
                     'name' => $rule->name,
-                    'route' => $rule->route
+                    'route' => $rule->route,
+                    'suffix' => $rule->suffix
                 ];
             } else if (is_string($rule)) {
                 $rules[] = [
@@ -60,6 +61,8 @@ class JsUrlManager extends Object implements BootstrapInterface
 
         return [
             'enablePrettyUrl' => $app->urlManager->enablePrettyUrl,
+            'showScriptName' => $app->urlManager->showScriptName,
+            'suffix' => $app->urlManager->suffix,
             'rules' => $rules
         ];
     }
