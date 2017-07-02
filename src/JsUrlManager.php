@@ -36,9 +36,9 @@ class JsUrlManager extends Object implements BootstrapInterface
     {
         $configuration = $this->defineConfiguration($app);
         if ($this->configureThroughVariable) {
-            $this->configureFrontendUrlManager($configuration);
-        } else {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
+        } else {
+            $this->configureFrontendUrlManager($configuration);
         }
 
         self::registerAssets();

@@ -47,7 +47,7 @@ export default class UrlManager {
         let result: UrlRule[] = [];
 
         for (let rule of rules) {
-            if (rule.suffix === undefined) {
+            if (!rule.suffix) {
                 rule.suffix = this.suffix;
             }
             result.push(new UrlRule(rule));
