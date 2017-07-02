@@ -26,3 +26,17 @@ export function buildQueryString (object : Object) : string {
 export function isEmptyObject (object : Object) : boolean {
     return Object.keys(object).length === 0;
 }
+
+/**
+ * Avoid of unneeded slashes
+ * @param string
+ * @returns {string}
+ */
+export function stripSlashes(string : string) : string {
+    // Trimming slashes
+    string = string.replace(/^\/|\/$/g, '');
+    // Delete repetitive slashes
+    string = string.replace(/\/\//g, '/');
+
+    return string;
+}

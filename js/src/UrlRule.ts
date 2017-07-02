@@ -26,7 +26,7 @@ export default class UrlRule {
      * @returns {boolean | string} URL or false if this rule can't  be created
      */
     createUrl(route, urlParams: IUrlParams = {}) : boolean | string {
-        if (route !== this.route) {
+        if (helper.stripSlashes(route) !== this.route) {
             return false;
         }
 
@@ -58,7 +58,7 @@ export default class UrlRule {
         }
 
         if (!validRule) {
-            return this.route + '?' + helper.buildQueryString(urlParams);
+            return '/' + this.route + '?' + helper.buildQueryString(urlParams);
         }
 
         return resultRule;

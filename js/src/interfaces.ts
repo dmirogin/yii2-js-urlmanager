@@ -9,6 +9,7 @@ export interface IRule
 }
 export interface IUrlManagerConfig {
     enablePrettyUrl?: boolean;
+    showScriptName?: boolean;
     rules: IRule[],
     suffix?: string
 }
