@@ -24,6 +24,18 @@ That extension provide a way to create urls from your frontend part.
        UrlManager.createUrl('foo/bar', {id: 10})
     ```
 
+if you want to change assets position, use this
+```php
+'assetManager' => [
+    'bundles' => [
+        \dmirogin\js\urlmanager\JsUrlManagerAsset::class => [
+            'jsOptions' => [
+                'position' => \yii\web\View::POS_END,
+            ],
+        ],
+    ],
+],
+```
 ### <a name="php-options"></a> PHP options
 
 #### configurationStringPosition - integer
