@@ -7,6 +7,11 @@ That extension provide a way to create urls from your frontend part.
 3. [Contributing](#contributing)
 4. [Roadmap](#roadmap)
 
+### Instalation
+```php
+composer require dmirogin/yii2-js-urlmanager
+```
+
 ### <a name="how-to-use"></a> How to use
 
 1. Add component to your application configuration
@@ -24,6 +29,18 @@ That extension provide a way to create urls from your frontend part.
        UrlManager.createUrl('foo/bar', {id: 10})
     ```
 
+if you want to change assets position, use this
+```php
+'assetManager' => [
+    'bundles' => [
+        \dmirogin\js\urlmanager\JsUrlManagerAsset::class => [
+            'jsOptions' => [
+                'position' => \yii\web\View::POS_END,
+            ],
+        ],
+    ],
+],
+```
 ### <a name="php-options"></a> PHP options
 
 #### configurationStringPosition - integer
