@@ -18,19 +18,36 @@ use yii\web\View;
 class JsUrlManager extends Object implements BootstrapInterface
 {
     /**
+     * The location to register configuration Frontend UrlManager string
+     * @var int
+     */
+    public $configurationStringPosition = View::POS_HEAD;
+
+    /**
+     * Set configuration to document.urlManagerConfiguration
+     * @var bool
+     */
+    public $configureThroughVariable = false;
+
+    /**
      * @inheritdoc
      */
     public function bootstrap($app)
     {
         $configuration = $this->defineConfiguration($app);
-        $this->configureFrontendUrlManager($configuration);
-        $this->registerAssets();
+        if ($this->configureThroughVariable) {
+            $this->configureFrontendUrlManager($configuration);
+        } else {
+            $this->configureFrontendUrlManagerThroughVariable($configuration);
+        }
+
+        self::registerAssets();
     }
 
     /**
      * Register necessary assets
      */
-    public function registerAssets()
+    public static function registerAssets()
     {
         JsUrlManagerAsset::register(Yii::$app->view);
     }
@@ -74,8 +91,29 @@ class JsUrlManager extends Object implements BootstrapInterface
     protected function configureFrontendUrlManager(array $configuration)
     {
         Yii::$app->view->registerJs(
-            'UrlManager.configure(' . new JsExpression(Json::encode($configuration)) . ');',
-            View::POS_HEAD
+            'UrlManager.configure(' . $this->prepareForFrontend($configuration) . ');',
+            $this->configurationStringPosition
         );
+    }
+
+    /**
+     * Register js string that configure frontend UrlManager
+     * @param array $configuration
+     */
+    protected function configureFrontendUrlManagerThroughVariable(array $configuration)
+    {
+        Yii::$app->view->registerJs(
+            'document.urlManagerConfiguration = ' . $this->prepareForFrontend($configuration) . ';',
+            $this->configurationStringPosition
+        );
+    }
+
+    /**
+     * Prepare any data to frontend
+     * @param mixed $value
+     * @return string
+     */
+    private function prepareForFrontend($value) {
+        return (string) new JsExpression(Json::encode($value));
     }
 }
