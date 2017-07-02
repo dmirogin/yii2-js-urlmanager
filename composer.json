@@ -1,8 +1,13 @@
 {
     "name": "dmirogin/yii2-js-urlmanager",
     "description": "Yii2 javascript URL manager",
+    "keywords": ["yii2", "assets", "urlManager"],
     "type": "yii2-extension",
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/dmirogin/yii2-js-urlmanager/issues",
+        "source": "https://github.com/dmirogin/yii2-js-urlmanager"
+    },
     "authors": [
         {
             "name": "Dmitry Dorogin",

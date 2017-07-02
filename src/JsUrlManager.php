@@ -15,6 +15,8 @@ use yii\web\View;
 /**
  * JsUrlManager allows you register a frontend UrlManager which almost is similar to yii\web\UrlManager
  * And provide configuration
+ *
+ * @author Dmitry Dorogin <dmirogin@ya.ru>
  */
 class JsUrlManager extends Object implements BootstrapInterface
 {
