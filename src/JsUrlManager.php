@@ -8,6 +8,7 @@ use yii\base\Object;
 use yii\helpers\Json;
 use yii\base\Application;
 use yii\web\JsExpression;
+use yii\web\UrlManager;
 use yii\web\UrlRule;
 use yii\web\View;
 
@@ -34,7 +35,7 @@ class JsUrlManager extends Object implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $configuration = $this->defineConfiguration($app);
+        $configuration = $this->defineConfiguration($app->urlManager);
         if ($this->configureThroughVariable) {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
         } else {
@@ -54,13 +55,13 @@ class JsUrlManager extends Object implements BootstrapInterface
 
     /**
      * Define configuration based on yii\web\UrlManager's configuration
-     * @param Application $app
+     * @param UrlManager $urlManager
      * @return array
      */
-    public function defineConfiguration(Application $app)
+    public function defineConfiguration(UrlManager $urlManager)
     {
         $rules = [];
-        foreach ($app->urlManager->rules as $name => $rule) {
+        foreach ($urlManager->rules as $name => $rule) {
             if ($rule instanceof UrlRule) {
                 $rules[] = [
                     'name' => $rule->name,
@@ -77,9 +78,9 @@ class JsUrlManager extends Object implements BootstrapInterface
         }
 
         return [
-            'enablePrettyUrl' => $app->urlManager->enablePrettyUrl,
-            'showScriptName' => $app->urlManager->showScriptName,
-            'suffix' => $app->urlManager->suffix,
+            'enablePrettyUrl' => $urlManager->enablePrettyUrl,
+            'showScriptName' => $urlManager->showScriptName,
+            'suffix' => $urlManager->suffix,
             'rules' => $rules
         ];
     }
