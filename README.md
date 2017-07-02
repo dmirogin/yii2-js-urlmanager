@@ -2,15 +2,15 @@
 
 That extension provide a way to create urls from your frontend part.
 
-1. [How to use](#how-to-use)
-2. [PHP options](#php-options)
-3. [Contributing](#contributing)
-4. [Roadmap](#roadmap)
-
 ### Instalation
 ```php
 composer require dmirogin/yii2-js-urlmanager
 ```
+
+1. [How to use](#how-to-use)
+2. [PHP options](#php-options)
+3. [Contributing](#contributing)
+4. [Roadmap](#roadmap)
 
 ### <a name="how-to-use"></a> How to use
 
