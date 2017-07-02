@@ -26,7 +26,7 @@ That extension provide a way to create urls from your frontend part.
 
 ### <a name="php-options"></a> PHP options
 
-##### configurationStringPosition - integer
+#### configurationStringPosition - integer
 Default value - \yii\web\View::POS_HEAD
 
 The location to register configuration Frontend UrlManager string
