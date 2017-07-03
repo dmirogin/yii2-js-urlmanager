@@ -38,6 +38,12 @@ export default class UrlRule {
         let regexpGroups = /<([\w._-]+):?([^>]+)?>/g;
         let matches;
 
+        let hash: string;
+        if (urlParams['#'] !== undefined) {
+            hash = <string> urlParams['#'];
+            delete urlParams['#'];
+        }
+
         let remainingParams = {...urlParams};
         let resultRule = '/' + trimmedSlashesName;
         let validRule = true;
@@ -61,7 +67,7 @@ export default class UrlRule {
         } while (matches);
 
         if (!validRule) {
-            return '/' + this.route + this.suffix + '?' + helper.buildQueryString(urlParams);
+            resultRule = '/' + this.route;
         }
 
         if (trimmedSlashesName) {
@@ -69,11 +75,14 @@ export default class UrlRule {
             resultRule += this.suffix;
         }
 
-        // Add remaining params as query string to result url
-        if (!helper.isEmptyObject(remainingParams) && replacedGroups) {
-            resultRule += '?' + helper.buildQueryString(remainingParams);
-        } else if (!helper.isEmptyObject(urlParams) && !replacedGroups) {
+        if (!helper.isEmptyObject(urlParams) && (!replacedGroups || !validRule)) {
             resultRule += '?' + helper.buildQueryString(urlParams);
+        } else if (!helper.isEmptyObject(remainingParams) && replacedGroups) {
+            resultRule += '?' + helper.buildQueryString(remainingParams);
+        }
+
+        if (hash) {
+            resultRule += '#' + hash;
         }
 
         return resultRule;

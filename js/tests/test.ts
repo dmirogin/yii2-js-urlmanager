@@ -33,7 +33,6 @@ test('it should create correct url without parameters', t => {
 });
 
 test('it should create correct url with query string if parameters were passed', t => {
-
     t.is('/?foo=bar&param2=value2', urlManager.createUrl('/site/index', {
         'foo' : 'bar',
         'param2' : 'value2'
@@ -62,6 +61,39 @@ test('it should create url if route doesn\'t found', t => {
     t.is('/undefined-url/foo/bar?param1=value1&param2=value2', urlManager.createUrl('/undefined-url/foo/bar', {
         'param1' : 'value1',
         'param2' : 'value2'
+    }));
+});
+
+test('it should create url with hash, if param that passed has name "#"', t => {
+    t.is('/?foo=bar&param2=value2#hash', urlManager.createUrl('/site/index', {
+        'foo' : 'bar',
+        'param2' : 'value2',
+        '#' : 'hash'
+    }));
+
+    t.is('/foo/bar?id=7&param2=value2#hash', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'param2' : 'value2',
+        '#' : 'hash'
+    }));
+
+    t.is('/foo/bar?id=7&type=third#hash', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'type' : 'third',
+        '#' : 'hash'
+    }));
+
+    t.is('/foo/7/bar/second#hash', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'type' : 'second',
+        '#' : 'hash'
+    }));
+
+    t.is('/foo/7/bar/second?queryParam=value#hash', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'type' : 'second',
+        'queryParam' : 'value',
+        '#' : 'hash'
     }));
 });
 
