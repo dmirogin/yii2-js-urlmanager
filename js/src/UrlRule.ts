@@ -38,6 +38,7 @@ export default class UrlRule {
         let regexpGroups = /<([\w._-]+):?([^>]+)?>/g;
         let matches;
 
+        let remainingParams = {...urlParams};
         let resultRule = '/' + trimmedSlashesName;
         let validRule = true;
 
@@ -47,29 +48,56 @@ export default class UrlRule {
             if (matches) {
                 let [group, groupKey, groupRegexpString] = matches;
 
-                let groupRegexp = new RegExp(groupRegexpString);
-                if (!groupRegexp.test(<string>urlParams[groupKey])) {
+                if (!this.validateGroup(groupRegexpString, <string> urlParams[groupKey])) {
+                    // Suppose it is invalid url unless group passed test
                     validRule = false;
                     break;
                 }
 
-                resultRule = resultRule.replace(new RegExp(helper.escapeRegexp(group)), <string>urlParams[groupKey]);
+                resultRule = this.replaceGroup(resultRule, group, <string>urlParams[groupKey]);
+                delete remainingParams[groupKey];
                 replacedGroups++;
             }
         } while (matches);
-
-        if (trimmedSlashesName) {
-            resultRule += this.suffix;
-        }
-
-        if (!replacedGroups && !helper.isEmptyObject(urlParams)) {
-            resultRule += '?' + helper.buildQueryString(urlParams);
-        }
 
         if (!validRule) {
             return '/' + this.route + this.suffix + '?' + helper.buildQueryString(urlParams);
         }
 
+        if (trimmedSlashesName) {
+            // Add suffix if it isn't a slash
+            resultRule += this.suffix;
+        }
+
+        // Add remaining params as query string to result url
+        if (!helper.isEmptyObject(remainingParams) && replacedGroups) {
+            resultRule += '?' + helper.buildQueryString(remainingParams);
+        } else if (!helper.isEmptyObject(urlParams) && !replacedGroups) {
+            resultRule += '?' + helper.buildQueryString(urlParams);
+        }
+
         return resultRule;
+    }
+
+    /**
+     * Validate regex group by value that passed in params
+     * @param groupRegexpString
+     * @param groupValue
+     * @returns {boolean}
+     */
+    private validateGroup(groupRegexpString: string, groupValue: string) : boolean {
+        let groupRegexp = new RegExp(groupRegexpString);
+        return groupRegexp.test(groupValue);
+    }
+
+    /**
+     * Replace group in result string by value that passed in params
+     * @param string
+     * @param group
+     * @param value
+     * @returns {string}
+     */
+    private replaceGroup(string: string, group: string, value: string) : string {
+        return string.replace(new RegExp(helper.escapeRegexp(group)), value);
     }
 }

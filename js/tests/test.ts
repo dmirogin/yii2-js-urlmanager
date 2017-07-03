@@ -32,17 +32,27 @@ test('it should create correct url without parameters', t => {
     t.is('/', urlManager.createUrl('/site/index'));
 });
 
-test('it should create correct url with query string if passed parameters aren\'t contained in name', t => {
+test('it should create correct url with query string if parameters were passed', t => {
+
     t.is('/?foo=bar&param2=value2', urlManager.createUrl('/site/index', {
         'foo' : 'bar',
         'param2' : 'value2'
     }));
-});
 
-test('it should create correct url with query string if not all passed parameters contained in name', t => {
     t.is('/foo/bar?id=7&param2=value2', urlManager.createUrl('/foo/bar', {
         'id' : 7,
         'param2' : 'value2'
+    }));
+
+    t.is('/foo/bar?id=7&type=third', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'type' : 'third'
+    }));
+
+    t.is('/foo/7/bar/second?queryParam=value', urlManager.createUrl('/foo/bar', {
+        'id' : 7,
+        'type' : 'second',
+        'queryParam' : 'value'
     }));
 });
 
