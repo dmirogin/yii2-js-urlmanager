@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/phpunit/phpunit/version)](https://packagist.org/packages/phpunit/phpunit)
+[![License](https://poser.pugx.org/phpunit/phpunit/license)](https://packagist.org/packages/phpunit/phpunit)
 # Yii2 js UrlManager
 
 That extension provide a way to create urls from your frontend part.
