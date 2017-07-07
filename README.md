@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/dmirogin/yii2-js-urlmanager/v/stable)](https://packagist.org/packages/dmirogin/yii2-js-urlmanager)
+[![License](https://poser.pugx.org/dmirogin/yii2-js-urlmanager/license)](https://packagist.org/packages/dmirogin/yii2-js-urlmanager)
 # Yii2 js UrlManager
 
 That extension provide a way to create urls from your frontend part.
