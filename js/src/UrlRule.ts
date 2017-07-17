@@ -18,7 +18,7 @@ export default class UrlRule {
     constructor(params: IRule) {
         this.name = params.name;
         this.route = helper.stripSlashes(params.route);
-        if (params.suffix !== undefined) {
+        if (params.suffix) {
             this.suffix = params.suffix;
         }
     };
