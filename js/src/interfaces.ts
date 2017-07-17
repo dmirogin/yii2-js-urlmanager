@@ -12,5 +12,6 @@ export interface IUrlManagerConfig {
     enablePrettyUrl?: boolean;
     showScriptName?: boolean;
     rules: IRule[],
-    suffix?: string
+    suffix?: string,
+    prefix?: string,
 }
