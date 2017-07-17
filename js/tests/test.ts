@@ -101,6 +101,7 @@ test('it should create url if showScriptName is true', t => {
     urlManager.configure({
         enablePrettyUrl: true,
         showScriptName: true,
+        prefix : '/index.php',
         rules: [
             {
                 name: '/foo/<id:(\\d+)>/bar/<type:(first|second)>',
@@ -135,6 +136,7 @@ test('it should create url if suffix passed', t => {
         enablePrettyUrl: true,
         showScriptName: false,
         suffix : '.html',
+        prefix : '',
         rules: [
             {
                 name: '/',

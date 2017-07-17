@@ -33,11 +33,17 @@ class JsUrlManager extends Object implements BootstrapInterface
     public $configureThroughVariable = false;
 
     /**
+     * @var UrlManager
+     */
+    private $urlManager;
+
+    /**
      * @inheritdoc
      */
     public function bootstrap($app)
     {
-        $configuration = $this->defineConfiguration($app->urlManager);
+        $this->setUrlManager($app->urlManager);
+        $configuration = $this->defineConfiguration();
         if ($this->configureThroughVariable) {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
         } else {
@@ -57,13 +63,26 @@ class JsUrlManager extends Object implements BootstrapInterface
 
     /**
      * Define configuration based on yii\web\UrlManager's configuration
-     * @param UrlManager $urlManager
      * @return array
      */
-    public function defineConfiguration(UrlManager $urlManager)
+    public function defineConfiguration()
+    {
+        return [
+            'enablePrettyUrl' => $this->urlManager->enablePrettyUrl,
+            'showScriptName' => $this->urlManager->showScriptName,
+            'suffix' => $this->urlManager->suffix,
+            'rules' => $this->getRules(),
+            'prefix' => $this->getPrefix(),
+        ];
+    }
+
+    /**
+     * Get rules
+     */
+    public function getRules()
     {
         $rules = [];
-        foreach ($urlManager->rules as $name => $rule) {
+        foreach ($this->urlManager->rules as $name => $rule) {
             if ($rule instanceof UrlRule) {
                 $rules[] = [
                     'name' => $rule->name,
@@ -76,15 +95,35 @@ class JsUrlManager extends Object implements BootstrapInterface
                     'route' => $rule
                 ];
             }
-
         }
 
-        return [
-            'enablePrettyUrl' => $urlManager->enablePrettyUrl,
-            'showScriptName' => $urlManager->showScriptName,
-            'suffix' => $urlManager->suffix,
-            'rules' => $rules
-        ];
+        return $rules;
+    }
+
+    /**
+     * Get url's prefix
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->urlManager->showScriptName || !$this->urlManager->enablePrettyUrl ?
+            $this->urlManager->getScriptUrl() : $this->urlManager->getBaseUrl();
+    }
+
+    /**
+     * @return UrlManager
+     */
+    public function getUrlManager()
+    {
+        return $this->urlManager;
+    }
+
+    /**
+     * @param UrlManager $urlManager
+     */
+    public function setUrlManager(UrlManager $urlManager)
+    {
+        $this->urlManager = $urlManager;
     }
 
     /**

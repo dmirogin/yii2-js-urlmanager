@@ -25,6 +25,13 @@ export default class UrlManager {
      * @type {string}
      */
     private suffix: string = '';
+    /**
+     * Prefix for url, depends on enablePrettyUrl and showScriptName settings
+     * Can contain something looks like '/index.php'
+     * Or baseUrl, if application document root is in subdirectories
+     * @type {string}
+     */
+    private prefix: string = '';
 
     public configure(config: IUrlManagerConfig) {
         if (config.enablePrettyUrl !== undefined) {
@@ -35,6 +42,9 @@ export default class UrlManager {
         }
         if (config.suffix !== undefined) {
             this.suffix = config.suffix;
+        }
+        if (config.prefix !== undefined) {
+            this.prefix = config.prefix;
         }
         this.buildRules(config.rules);
     }
@@ -79,8 +89,8 @@ export default class UrlManager {
             result = UrlManager.createQueryUrl(route, urlParams);
         }
 
-        if (this.showScriptName || !this.enablePrettyUrl) {
-            result = '/index.php' + result;
+        if (this.prefix) {
+            result = this.prefix + result;
         }
 
         return result;
