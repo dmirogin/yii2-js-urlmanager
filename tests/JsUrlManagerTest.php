@@ -2,8 +2,12 @@
 
 
 use dmirogin\js\urlmanager\JsUrlManager;
+use yii\helpers\Json;
 use yii\web\Application;
+use yii\web\JsExpression;
+use yii\web\Request;
 use yii\web\UrlManager;
+use yii\web\View;
 
 class JsUrlManagerTest extends \PHPUnit\Framework\TestCase
 {
@@ -153,5 +157,73 @@ class JsUrlManagerTest extends \PHPUnit\Framework\TestCase
             'rules' => $jsUrlManager->getRules(),
             'prefix' => $jsUrlManager->getPrefix(),
         ], $jsUrlManager->defineConfiguration());
+    }
+
+    /**
+     * @covers JsUrlManager::bootstrap()
+     * @depends testGetRules
+     * @depends testGetPrefix
+     * @depends testSetUrlManager
+     * @depends testDefineConfiguration
+     */
+    public function testBootstrap()
+    {
+        $app = $this->mockWebApplication();
+
+        $configureRequest = function($isAjax) use ($app) {
+            $request = $this->createMock(Request::class);
+
+            $request->expects($this->any())
+                ->method('getIsAjax')
+                ->willReturn($isAjax);
+
+            $app->set('request', $request);
+        };
+
+        $configureViewWithRegisterJs = function($js, $pos = View::POS_BEGIN) use ($app) {
+            $view = $this->createMock(View::class);
+
+            $view->expects($this->once())
+                ->method('registerJs')
+                ->with($js, $pos);
+
+            $app->set('view', $view);
+        };
+
+        /** @var JsUrlManager $jsUrlManager */
+        $jsUrlManager = Yii::createObject(JsUrlManager::class);
+        $jsUrlManager->setUrlManager($app->urlManager);
+        $jsUrlManager->configurationStringPosition = View::POS_BEGIN;
+
+        // Disable AJAX mode
+        $jsUrlManager->configureOnAjaxRequests = false;
+        $configureRequest(false);
+
+        $configureViewWithRegisterJs('document.urlManagerConfiguration = ' . new JsExpression(Json::encode($jsUrlManager->defineConfiguration())) . ';');
+        $jsUrlManager->configureThroughVariable = true;
+        $jsUrlManager->bootstrap($app);
+
+        $configureViewWithRegisterJs('UrlManager.configure(' . new JsExpression(Json::encode($jsUrlManager->defineConfiguration())) . ');');
+        $jsUrlManager->configureThroughVariable = false;
+        $jsUrlManager->bootstrap($app);
+
+        // enable AJAX mode
+        $jsUrlManager->configureOnAjaxRequests = true;
+        $configureRequest(true);
+
+        $configureViewWithRegisterJs('document.urlManagerConfiguration = ' . new JsExpression(Json::encode($jsUrlManager->defineConfiguration())) . ';');
+        $jsUrlManager->configureThroughVariable = true;
+        $jsUrlManager->bootstrap($app);
+
+        $configureViewWithRegisterJs('UrlManager.configure(' . new JsExpression(Json::encode($jsUrlManager->defineConfiguration())) . ');');
+        $jsUrlManager->configureThroughVariable = false;
+        $jsUrlManager->bootstrap($app);
+
+        // disable bootstrapping using AJAX requests
+        $jsUrlManager->configureOnAjaxRequests = false;
+        $jsUrlManager->configureThroughVariable = true;
+        $jsUrlManager->bootstrap($app);
+        $jsUrlManager->configureThroughVariable = false;
+        $jsUrlManager->bootstrap($app);
     }
 }
