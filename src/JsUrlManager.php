@@ -52,7 +52,7 @@ class JsUrlManager extends Object implements BootstrapInterface
         $configuration = $this->defineConfiguration();
         if ($this->configureThroughVariable) {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
-        } elseif (!$app->request instanceof \yii\web\Request || !Yii::$app->request->isAjax || $this->configureOnAjaxRequests) {
+        } elseif (!$app->request instanceof \yii\web\Request || !$app->request->isAjax || $this->configureOnAjaxRequests) {
             $this->configureFrontendUrlManager($configuration);
         }
 
