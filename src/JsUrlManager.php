@@ -138,7 +138,7 @@ class JsUrlManager extends Object implements BootstrapInterface
      * Register js string that configure frontend UrlManager
      * @param array $configuration
      */
-    public function configureFrontendUrlManager(array $configuration)
+    protected function configureFrontendUrlManager(array $configuration)
     {
         Yii::$app->view->registerJs(
             'UrlManager.configure(' . $this->prepareForFrontend($configuration) . ');',
@@ -150,7 +150,7 @@ class JsUrlManager extends Object implements BootstrapInterface
      * Register js string that configure frontend UrlManager
      * @param array $configuration
      */
-    public function configureFrontendUrlManagerThroughVariable(array $configuration)
+    protected function configureFrontendUrlManagerThroughVariable(array $configuration)
     {
         Yii::$app->view->registerJs(
             'document.urlManagerConfiguration = ' . $this->prepareForFrontend($configuration) . ';',
