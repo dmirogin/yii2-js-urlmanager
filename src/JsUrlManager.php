@@ -8,6 +8,7 @@ use yii\base\Object;
 use yii\helpers\Json;
 use yii\base\Application;
 use yii\web\JsExpression;
+use yii\web\Request;
 use yii\web\UrlManager;
 use yii\web\UrlRule;
 use yii\web\View;
@@ -33,6 +34,12 @@ class JsUrlManager extends Object implements BootstrapInterface
     public $configureThroughVariable = false;
 
     /**
+     * Initialize configuration on AJAX requests
+     * @var bool
+     */
+    public $configureOnAjaxRequests = true;
+
+    /**
      * @var UrlManager
      */
     private $urlManager;
@@ -44,9 +51,10 @@ class JsUrlManager extends Object implements BootstrapInterface
     {
         $this->setUrlManager($app->urlManager);
         $configuration = $this->defineConfiguration();
-        if ($this->configureThroughVariable) {
+        $enableConfiguration = !$app->request instanceof \yii\web\Request || !$app->request->getIsAjax() || $this->configureOnAjaxRequests;
+        if ($enableConfiguration && $this->configureThroughVariable) {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
-        } else {
+        } elseif ($enableConfiguration) {
             $this->configureFrontendUrlManager($configuration);
         }
 
