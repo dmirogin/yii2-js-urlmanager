@@ -33,6 +33,12 @@ class JsUrlManager extends Object implements BootstrapInterface
     public $configureThroughVariable = false;
 
     /**
+     * Initialize configuration on AJAX requests
+     * @var bool
+     */
+    public $configureOnAjaxRequests = true;
+
+    /**
      * @var UrlManager
      */
     private $urlManager;
@@ -46,7 +52,7 @@ class JsUrlManager extends Object implements BootstrapInterface
         $configuration = $this->defineConfiguration();
         if ($this->configureThroughVariable) {
             $this->configureFrontendUrlManagerThroughVariable($configuration);
-        } else {
+        } elseif (!$app->request instanceof \yii\web\Request || !Yii::$app->request->isAjax || $this->configureOnAjaxRequests) {
             $this->configureFrontendUrlManager($configuration);
         }
 
