@@ -4,7 +4,7 @@ namespace dmirogin\js\urlmanager;
 
 use Yii;
 use yii\base\BootstrapInterface;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\helpers\Json;
 use yii\base\Application;
 use yii\web\JsExpression;
@@ -19,7 +19,7 @@ use yii\web\View;
  *
  * @author Dmitry Dorogin <dmirogin@ya.ru>
  */
-class JsUrlManager extends Object implements BootstrapInterface
+class JsUrlManager extends BaseObject implements BootstrapInterface
 {
     /**
      * The location to register configuration Frontend UrlManager string
