@@ -40,7 +40,7 @@ export default class UrlManager {
         if (config.showScriptName !== undefined) {
             this.showScriptName = config.showScriptName;
         }
-        if (config.suffix !== undefined) {
+        if (config.suffix) {
             this.suffix = config.suffix;
         }
         if (config.prefix !== undefined) {
