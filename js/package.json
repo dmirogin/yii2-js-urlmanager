@@ -1,9 +1,9 @@
 {
   "devDependencies": {
-    "ava": "^0.19.1",
-    "ts-loader": "^2.2.0",
-    "typescript": "^2.3.4",
-    "webpack": "^3.0.0"
+    "ava": "~0.19.1",
+    "ts-loader": "~2.2.0",
+    "typescript": "~2.3.4",
+    "webpack": "~3.0.0"
   },
   "scripts": {
     "watch": "webpack --watch",
